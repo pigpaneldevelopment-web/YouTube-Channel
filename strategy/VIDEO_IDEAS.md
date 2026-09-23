@@ -112,11 +112,18 @@ Check off as published. Pull new ideas into `CONTENT_CALENDAR.md` in tier order.
 - [ ] Year One: Everything I Built and Earned
 - [ ] What I'd Tell Myself on Video One
 
-## Tier 5 — AI workflow deep dives (series candidate)
-Not scheduled yet. Each "AI-workflow lesson" callout in a Full Build (see pillar 5 in `STRATEGY.md`) is a source for one of these — don't launch the series until there's a backlog of real lessons from actual builds to draw from, so nothing here gets padded with generic advice.
+## Tier 5 — AI workflow deep dives / tips & tricks (real pillar now, see `STRATEGY.md`)
+Every idea here has to trace back to a real lesson from an actual build — don't pad this with generic "AI tips" advice that isn't tied to something that actually happened.
 - [ ] Why I Start a New Chat for Every Feature (Context Management 101)
 - [ ] The One File I Give Claude Before Every Build
 - [ ] How Long Is Too Long? When to Reset Your AI Chat
 - [ ] Referencing Docs and Specs So AI Doesn't Guess
 - [ ] My Full Claude Workflow, Start to Finish
 - [ ] Every AI Coding Mistake I've Made, Ranked
+- [ ] How I Verify an AI Build Actually Works (Not Just Looks Done) — seeded from the RSVP-import verification lesson, `apps/wedding-seating-chart/BUILD_LOG.md`
+- [ ] Which AI Model Should You Actually Use (Speed vs. Quality vs. Cost)
+- [ ] How I Cut My AI Usage Without Losing Quality
+- [ ] The Prompt Habits That Actually Save You Time
+- [ ] Claude Code vs. a Chat Window: When to Use Which
+- [ ] Why Your AI Bill Adds Up (and What Actually Drives It)
+- [ ] I Let AI Build Something Autonomously — Here's What I Learned
