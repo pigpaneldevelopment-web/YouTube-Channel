@@ -4,7 +4,7 @@ Target length: 9–12 min. Format: **honest recap**, not live-capture — see `P
 
 Source: `apps/wedding-seating-chart/BUILD_LOG.md` and both real footage clips (`rsvp-import-demo.webm`, `csv-import-demo.webm`). Quote/use them directly; don't embellish.
 
-**A rough-cut assembly already exists**: `apps/wedding-seating-chart/footage/week01-rough-cut.webm` (51s, silent). It stitches both real footage clips together with title/caption cards styled to match the app, timed roughly to the beats below. It's not a finished video — no narration, no polish — but it's a real starting skeleton, not something to build from scratch. Watch it before recording narration; the beats below are written to match what's already assembled.
+**A rough-cut assembly already exists**: `apps/wedding-seating-chart/footage/week01-rough-cut.webm` (~74s, silent). It stitches both real footage clips together with title/caption cards styled to match the app, crossfading between beats and paced for actual reading time (not a fast slideshow — this was reviewed and slowed down from an earlier pass that moved too fast to watch). It's not a finished video — no narration, no polish — but it's a real starting skeleton, not something to build from scratch. Watch it before recording narration; the beats below are written to match what's already assembled.
 
 ## 0:00–0:15 — Hook + honest framing, stated up front
 Open on the finished seating chart app, then the import flow working (real footage).

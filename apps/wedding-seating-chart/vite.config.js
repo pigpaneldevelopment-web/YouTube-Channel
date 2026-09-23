@@ -23,6 +23,11 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ["**/*.{js,css,html,png,svg}"],
+        // Without this, the SW's SPA navigation fallback (which serves this
+        // app's cached index.html for any unmatched route in its scope)
+        // hijacks /sop-trainer/ too, since that path lives under the same
+        // /YouTube-Channel/ scope. Exclude it so that app's own files load.
+        navigateFallbackDenylist: [/^\/YouTube-Channel\/sop-trainer\//],
       },
     }),
   ],
