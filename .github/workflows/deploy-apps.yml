@@ -1,0 +1,65 @@
+name: Deploy Apps to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/wedding-seating-chart/**"
+      - "apps/sop-trainer/**"
+      - ".github/workflows/deploy-apps.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            apps/wedding-seating-chart/package-lock.json
+            apps/sop-trainer/package-lock.json
+
+      - name: Build wedding seating chart (site root)
+        working-directory: apps/wedding-seating-chart
+        run: |
+          npm ci
+          npm run build
+
+      - name: Build SOP trainer (/sop-trainer/ subpath)
+        working-directory: apps/sop-trainer
+        run: |
+          npm ci
+          npm run build
+
+      - name: Combine into one Pages site
+        run: |
+          mkdir -p combined
+          cp -r apps/wedding-seating-chart/dist/. combined/
+          mkdir -p combined/sop-trainer
+          cp -r apps/sop-trainer/dist/. combined/sop-trainer/
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: combined
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

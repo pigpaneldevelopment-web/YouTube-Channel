@@ -32,11 +32,11 @@ Verified working: builds clean, renders correctly in a real browser (all 16 tabl
 
 ## Deploy
 
-`.github/workflows/deploy-wedding-app.yml` builds and publishes this app to GitHub Pages automatically on every push to `main` that touches this folder. Once merged and the workflow runs, it'll be live at:
+`.github/workflows/deploy-apps.yml` builds this app (site root) and the SOP trainer app (`/sop-trainer/` subpath) together and publishes both to GitHub Pages on every push to `main` that touches either. This app is live at:
 
 **https://pigpaneldevelopment-web.github.io/YouTube-Channel/**
 
-Requires GitHub Pages enabled on the repo (Settings → Pages → Source: GitHub Actions) — one-time setup, not something this workflow can do for itself.
+Requires GitHub Pages enabled on the repo (Settings → Pages → Source: GitHub Actions) — one-time setup, not something this workflow can do for itself. Verified locally before pushing: built both apps, combined the output exactly as the workflow does, served it at the real path structure, confirmed both apps render correctly with no console errors.
 
 To install it on a phone: open that URL in mobile Safari/Chrome, then "Add to Home Screen." It'll behave like a native app (own icon, no browser chrome) and work offline after the first load.
 
