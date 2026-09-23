@@ -3,7 +3,7 @@
 ## Positioning
 "Real apps for real problems, built with AI, by a guy with a day job."
 
-Name directions to check handle availability for: Weekend Build, Built After Hours, The Side Build.
+**Channel name: "Apps After Hours"** — handle `@appsafterhours`, confirmed available (verify final claim in YouTube Studio before publishing). The original directions (Weekend Build, Built After Hours, The Side Build) were all already taken by unrelated or adjacent-niche channels; `@appsafterhours` keeps the after-hours/day-job positioning with no collision.
 
 **Constraint:** keep Oracle products, customers, and hospitality work off the channel entirely. Check Oracle's outside-activities policy before publishing anything.
 
