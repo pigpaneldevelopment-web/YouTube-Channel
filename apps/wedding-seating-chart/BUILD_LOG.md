@@ -24,3 +24,11 @@ The simple one-name-per-line import doesn't cover a real wedding guest list, whi
 Behavior on import: a name with a Table # that matches an existing table gets seated directly in the next open seat there; everything else — no table given, or the table doesn't match anything real — lands in the unassigned pool like before, never silently dropped. Extra fields (meal, dietary, etc.) are stored per guest and now show in the Guest Roster panel next to their name.
 
 **Verified the same way as before, real end-to-end test, not eyeballed:** parsed a 3-row CSV (two valid table numbers, one invalid), confirmed the auto-guessed column mapping was correct, confirmed the two valid rows landed in the right seats with their meal/dietary info attached and visible in the roster, confirmed the invalid-table row fell through to the pool instead of being lost, checked the actual saved data, zero console errors. Same lesson as the first build: verify the actual behavior, not just that the UI renders.
+
+## Real footage, part 2
+`footage/csv-import-demo.webm` — real screen recording of the CSV import flow: opening the modal, switching to CSV mode, typing/pasting a 5-row guest list (with a live text cursor, not an instant fill), the column-mapping step showing the auto-guessed fields, clicking Import, and the roster updating with seated guests and their meal/dietary info visible. Genuine capture, not staged.
+
+## Rough-cut assembly
+`footage/week01-rough-cut.webm` (51s) — a silent rough-cut assembling both real footage clips with title/caption cards (styled to match the app's own visual language: same gradient background, Playfair Display/Lato fonts, gold accent) at the beats laid out in `strategy/scripts/week-01-full-app-day.md`. This is not a finished video — no narration, no editing polish — it's a real assembled skeleton meant to be narrated over rather than built from scratch. Built entirely from real material: the two genuine footage clips plus caption text pulled from this build log, no invented content.
+
+Order: title card → premise card (states the honest-recap framing) → problem card → "the ask" card → RSVP import footage (7.2s) → "the follow-up" card → CSV import footage (15.2s) → AI-workflow lesson card → end card.
