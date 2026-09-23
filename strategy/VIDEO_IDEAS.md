@@ -5,7 +5,8 @@ Check off as published. Pull new ideas into `CONTENT_CALENDAR.md` in tier order.
 > **Off-limits:** the ski house cost-splitting app is a friend's project and must not be featured in any video — its original backlog entry has been removed.
 
 ## Tier 1 — search + broad appeal (post these first)
-- [ ] I Built a Full App With AI in One Day (No Coding Background)
+- [ ] I Built a Full App With AI in One Day (No Coding Background) — genuine live-build premise, needs a fresh app with no prior build history so real footage can be captured from the start; not the same video as Week 1
+- [x] I Let Claude Build a Feature for My Wedding App — Week 1, honest-recap format, see `strategy/scripts/week-01-full-app-day.md`
 - [ ] I Replaced 5 Paid Apps With Ones I Built Using AI
 - [ ] Build Your First App With AI: Complete Beginner Walkthrough
 - [ ] I Built My Friends a Fantasy Football Pick'em App
