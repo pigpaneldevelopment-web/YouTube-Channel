@@ -20,7 +20,7 @@ One long video + 2–3 Shorts (cut from that week's long video) per week. Sequen
 **After week 12:** pull from Tier 1 remainder (8 videos left) + start rotating in Tier 2 how-tos. Re-run this calendar exercise in 12-week blocks rather than planning the full year up front — leave room to double down on whatever format/topic overperforms.
 
 ## Before Week 1
-- [ ] Confirm channel name/handle availability (Weekend Build / Built After Hours / The Side Build)
+- [x] Confirm channel name/handle availability — chose **Apps After Hours** (`@appsafterhours`); claim it in YouTube Studio to finalize
 - [ ] Confirm current YouTube Partner Program thresholds directly on youtube.com/creators (see flag in `STRATEGY.md`)
 - [ ] Confirm Oracle outside-activities policy allows this channel
 - [ ] Set up affiliate accounts for hosting/DB/AI tools actually used in builds
