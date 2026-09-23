@@ -25,6 +25,7 @@
 2. **How-tos** — logins, databases, deploys, notifications. Search engine.
 3. **Tool tests** — AI tool comparisons, monthly cadence. Affiliate engine.
 4. **Side project economics** — costs, pricing, does it make money. Trust + lead gen.
+5. **AI workflow lessons** — not a standalone pillar yet, a recurring *element* inside Full Builds and How-tos: one callout per video naming a specific Claude/AI usage lesson (context management, when to start a fresh chat, referencing docs/specs instead of re-explaining, instruction-file setup). Builds credibility ("this guy's actually figured out how to use these tools") and gives the channel a natural on-ramp to a dedicated deep-dive series later once there's a backlog of real lessons to draw from — see the candidate list in `VIDEO_IDEAS.md`.
 
 ## Monetization ladder
 - **Months 1–3:** affiliate links (hosting, database, AI tools actually used).
@@ -46,4 +47,5 @@ Practical read: starting now (Sept 2026), you have until ~Feb 2027 to hit 4,000 
 - Name the problem.
 - Build in 3–4 visible milestones.
 - Show one thing breaking and getting fixed (failures hold attention).
+- Call out one AI-workflow lesson relevant to this build (pillar 5, above).
 - End by pointing to the next build.

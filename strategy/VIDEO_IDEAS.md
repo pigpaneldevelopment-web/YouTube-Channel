@@ -5,7 +5,7 @@ Check off as published. Pull new ideas into `CONTENT_CALENDAR.md` in tier order.
 > **Off-limits:** the ski house cost-splitting app is a friend's project and must not be featured in any video — its original backlog entry has been removed.
 
 ## Tier 1 — search + broad appeal (post these first)
-- [ ] I Built a Full App With AI in One Weekend (No Coding Background)
+- [ ] I Built a Full App With AI in One Day (No Coding Background)
 - [ ] I Replaced 5 Paid Apps With Ones I Built Using AI
 - [ ] Build Your First App With AI: Complete Beginner Walkthrough
 - [ ] I Built My Friends a Fantasy Football Pick'em App
@@ -110,3 +110,12 @@ Check off as published. Pull new ideas into `CONTENT_CALENDAR.md` in tier order.
 - [ ] Build a Simple CRM for a Side Business
 - [ ] Year One: Everything I Built and Earned
 - [ ] What I'd Tell Myself on Video One
+
+## Tier 5 — AI workflow deep dives (series candidate)
+Not scheduled yet. Each "AI-workflow lesson" callout in a Full Build (see pillar 5 in `STRATEGY.md`) is a source for one of these — don't launch the series until there's a backlog of real lessons from actual builds to draw from, so nothing here gets padded with generic advice.
+- [ ] Why I Start a New Chat for Every Feature (Context Management 101)
+- [ ] The One File I Give Claude Before Every Build
+- [ ] How Long Is Too Long? When to Reset Your AI Chat
+- [ ] Referencing Docs and Specs So AI Doesn't Guess
+- [ ] My Full Claude Workflow, Start to Finish
+- [ ] Every AI Coding Mistake I've Made, Ranked

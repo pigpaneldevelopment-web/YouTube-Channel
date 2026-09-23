@@ -33,6 +33,7 @@ Output: one long video (8–15 min) + 2–3 Shorts per week. Shorts drive discov
 - [ ] Screen capture is of a real take (no staged/faked segments)
 - [ ] Edited, first 10 seconds show the finished app
 - [ ] One real failure-and-fix moment included
+- [ ] One AI-workflow lesson called out (real, specific to this build — see pillar 5 in `STRATEGY.md`)
 - [ ] Title + thumbnail set
 - [ ] 2–3 Shorts cut
 - [ ] Affiliate links added (hosting/DB/AI tools used in this build)
