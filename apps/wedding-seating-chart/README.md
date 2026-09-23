@@ -2,6 +2,12 @@
 
 Interactive drag-and-drop wedding seating chart: tables (round/rect/head table), draggable venue elements (bar, dance floor, cake table, etc.), click-to-assign guest seats, auto-saving layout, and a guest roster with filtering. Installable as a PWA, works offline, persists locally on-device.
 
+Guest list import, two modes:
+- **Simple list** — paste names, one per line, they land in an unassigned pool to place manually.
+- **CSV / spreadsheet** — paste a CSV with a header row, map each column to a field (First/Last/Full Name, Table #, Meal Preference, Dietary Restrictions, RSVP Status, Plus One, Party/Group, Notes — auto-guessed from header text, adjustable). A valid Table # seats the guest directly; anything else falls to the pool instead of being lost.
+
+See `BUILD_LOG.md` for the real build/verification record behind both.
+
 ## Structure
 
 - **`SeatingChart.jsx`** (repo root of this folder) — the original file as pasted from the Claude conversation ("wedding seating chart dashboard"), kept as a reference copy. Depends on `window.storage`, the Claude Artifacts persistence API, so it only runs inside a Claude.ai artifact page, not standalone.
@@ -34,6 +40,6 @@ Requires GitHub Pages enabled on the repo (Settings → Pages → Source: GitHub
 
 To install it on a phone: open that URL in mobile Safari/Chrome, then "Add to Home Screen." It'll behave like a native app (own icon, no browser chrome) and work offline after the first load.
 
-## Video planning note — read before treating this as the Week 1 build
+## Video
 
-The Week 1 script (`strategy/scripts/week-01-full-app-day.md`) was written as "watch me build this in a day." This app was already built in a prior Claude chat before this repo existed, with no original footage available — resolved in conversation: Week 1 will be reframed around a live feature build (something real, added and filmed today) instead of the original build. Script not yet updated to match — pending on deciding what gets built live and how it's filmed (see conversation for the live-session vs. honest-recap framing options).
+Week 1 (`strategy/scripts/week-01-full-app-day.md`) uses the honest-recap format: Claude built the RSVP-import feature autonomously, stated plainly on camera, narrated over real footage (`footage/rsvp-import-demo.webm`) and `BUILD_LOG.md` rather than presented as live capture. See `strategy/PRODUCTION_WORKFLOW.md` for what that format is and when to use it.
