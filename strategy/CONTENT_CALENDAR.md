@@ -4,7 +4,7 @@ One long video + 2–3 Shorts (cut from that week's long video) per week. Sequen
 
 | Week | Long video | Why this slot |
 |---|---|---|
-| 1 | I Built a Full App With AI in One Day (No Coding Background) | Strongest hook, sets channel premise — built around the wedding seating chart app. "One day" over "one weekend": more honest to actual build time and reinforces the day-job/limited-hours positioning |
+| 1 | I Let Claude Build a Feature for My Wedding App | Honest-recap format (see `PRODUCTION_WORKFLOW.md`) — Claude built the RSVP-import feature autonomously, real footage + build log, you narrate. Chosen over the original "watch me build it live" premise because the wedding app was already built with no original footage available, and because it's genuinely faster for you to produce. Script: `strategy/scripts/week-01-full-app-day.md` |
 | 2 | I Built a Wedding Seating Chart App | Dedicated deep-dive on the Week 1 app, proof of "real users," differentiates from demo channels |
 | 3 | Build Your First App With AI: Complete Beginner Walkthrough | Evergreen search magnet, early |
 | 4 | Add Logins and a Database to Your AI-Built App for Free | Search engine pillar, high intent |

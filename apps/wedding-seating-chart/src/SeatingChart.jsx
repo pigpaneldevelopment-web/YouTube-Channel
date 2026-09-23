@@ -203,6 +203,9 @@ export default function SeatingChart() {
   const [legendFilter,setLegendFilter] = useState("all");
   const [saveStatus, setSaveStatus] = useState("idle"); // "idle" | "saving" | "saved" | "error"
   const [loaded,    setLoaded]    = useState(false);
+  const [pool,       setPool]       = useState([]);
+  const [poolSelected, setPoolSelected] = useState(null);
+  const [importText, setImportText] = useState("");
 
   // Add table form
   const [ntS, setNtS] = useState("circle");
@@ -249,6 +252,7 @@ export default function SeatingChart() {
           }
         });
         setGuests(merged);
+        if (Array.isArray(data.pool)) setPool(data.pool);
       }
       setLoaded(true);
     });
@@ -256,7 +260,7 @@ export default function SeatingChart() {
 
   // ── Auto-save whenever state changes (debounced 800ms) ──
   const stateRef = useRef({});
-  stateRef.current = { tables, tPos, guests, tNames, elems, ePos, roomW, roomH, roomOX, roomOY, title };
+  stateRef.current = { tables, tPos, guests, tNames, elems, ePos, roomW, roomH, roomOX, roomOY, title, pool };
 
   useEffect(() => {
     if (!loaded) return;
@@ -268,7 +272,7 @@ export default function SeatingChart() {
       setTimeout(() => setSaveStatus("idle"), 2000);
     }, 800);
     return () => clearTimeout(saveTimer.current);
-  }, [tables, tPos, guests, tNames, elems, ePos, roomW, roomH, roomOX, roomOY, title, loaded]);
+  }, [tables, tPos, guests, tNames, elems, ePos, roomW, roomH, roomOX, roomOY, title, pool, loaded]);
 
   // ── SVG drag ──
   const svgPt = useCallback((e) => {
@@ -336,6 +340,33 @@ export default function SeatingChart() {
   const startEdit = (k,v) => { if(dragRef.current?.dd) return; setEditing(k); setInputVal(v); setTimeout(()=>inRef.current?.focus(),30); };
   const commitEdit = () => { if(editing){ setGuests(p=>({...p,[editing]:inputVal.trim()})); setEditing(null); setInputVal(""); } };
 
+  // Seat click: if a pool guest is selected and the seat is open, place them there.
+  // Otherwise falls through to the normal manual-edit flow.
+  const assignSeat = (k, existingName) => {
+    if (dragRef.current?.dd) return;
+    if (poolSelected && !existingName) {
+      setGuests(p => ({ ...p, [k]: poolSelected }));
+      setPool(p => p.filter(g => g !== poolSelected));
+      setPoolSelected(null);
+      return;
+    }
+    startEdit(k, existingName);
+  };
+
+  const importGuests = () => {
+    const names = importText.split("\n").map(s => s.trim()).filter(Boolean);
+    if (names.length > 0) {
+      setPool(p => {
+        const existing = new Set(p);
+        const merged = [...p];
+        names.forEach(n => { if (!existing.has(n)) { merged.push(n); existing.add(n); } });
+        return merged;
+      });
+    }
+    setImportText("");
+    setModal(null);
+  };
+
   const total  = tables.reduce((s,t)=>s+t.seats,0);
   const filled = Object.values(guests).filter(Boolean).length;
 
@@ -356,7 +387,7 @@ export default function SeatingChart() {
           stroke={c} strokeWidth={hov?".3":".18"} strokeOpacity={fl?.9:.4}
           style={{cursor:"pointer",transformOrigin:`${s.x}px ${s.y}px`,transition:"all .15s"}}
           onMouseEnter={()=>setHovered(k)} onMouseLeave={()=>setHovered(null)}
-          onClick={()=>startEdit(k,nm)}/>
+          onClick={()=>assignSeat(k,nm)}/>
         <text x={s.x} y={s.y+0.4} textAnchor="middle"
           fill={fl?"#fff":"rgba(232,224,212,.22)"}
           fontSize={fl?"0.85":"0.8"} style={{pointerEvents:"none",fontFamily:"'Lato',sans-serif"}}>
@@ -412,12 +443,32 @@ export default function SeatingChart() {
           <span className="pill"><span style={{width:8,height:8,borderRadius:"50%",background:"rgba(255,255,255,.2)"}}/>{total-filled} open</span>
           <span className="pill">🪑 {total} total seats</span>
           {filled>0 && <button className="abtn" style={{background:"rgba(196,106,94,.15)",border:"1px solid rgba(196,106,94,.3)",color:"#C46A5E"}} onClick={()=>{ const g={}; tables.forEach((t,i)=>{ for(let s=0;s<t.seats;s++) g[`${i}-${s}`]=""; }); setGuests(g); }}>Clear guests</button>}
+          <button className="abtn" style={{background:"rgba(106,126,184,.15)",border:"1px solid rgba(106,126,184,.3)",color:"#6A7EB8"}} onClick={()=>setModal("importGuests")}>⬆ Import Guests</button>
           <button className="abtn" style={{background:"rgba(126,168,126,.15)",border:"1px solid rgba(126,168,126,.3)",color:"#7EA87E"}} onClick={()=>setModal("addTable")}>+ Add Table</button>
           <button className="abtn" style={{background:"rgba(212,180,131,.15)",border:"1px solid rgba(212,180,131,.3)",color:"#d4b483"}} onClick={()=>setModal("addElement")}>+ Add Element</button>
           <button className="abtn" style={{background:"rgba(94,143,168,.15)",border:"1px solid rgba(94,143,168,.3)",color:"#5E8FA8"}} onClick={()=>setModal("room")}>⚙ Room</button>
           <button className="abtn" style={{background:"rgba(154,106,174,.15)",border:"1px solid rgba(154,106,174,.3)",color:"#9A6AAE"}} onClick={resetAll}>↺ Reset</button>
         </div>
       </div>
+
+      {/* Unassigned guest pool */}
+      {pool.length>0 && (
+        <div style={{maxWidth:900,margin:"0 auto 16px",display:"flex",flexWrap:"wrap",gap:6,justifyContent:"center",alignItems:"center"}}>
+          <span style={{fontFamily:"'Lato',sans-serif",fontSize:11,color:"rgba(232,224,212,.4)",letterSpacing:1,marginRight:4}}>UNASSIGNED ({pool.length}):</span>
+          {pool.map(name => (
+            <span key={name} onClick={()=>setPoolSelected(p=>p===name?null:name)}
+              style={{display:"inline-flex",alignItems:"center",gap:6,padding:"4px 10px",borderRadius:14,cursor:"pointer",
+                fontFamily:"'Lato',sans-serif",fontSize:12,transition:"all .15s",
+                background: poolSelected===name ? "rgba(126,168,126,0.25)" : "rgba(255,255,255,0.06)",
+                border: `1px solid ${poolSelected===name ? "rgba(126,168,126,0.6)" : "rgba(255,255,255,0.12)"}`,
+                color: poolSelected===name ? "#7EA87E" : "rgba(232,224,212,.75)"}}>
+              {name}
+              <span onClick={(e)=>{e.stopPropagation(); setPool(p=>p.filter(g=>g!==name)); if(poolSelected===name) setPoolSelected(null);}} style={{opacity:0.5,cursor:"pointer"}}>×</span>
+            </span>
+          ))}
+          {poolSelected && <span style={{fontFamily:"'Lato',sans-serif",fontSize:11,color:"#7EA87E",marginLeft:6}}>Click an open seat to place {poolSelected}</span>}
+        </div>
+      )}
 
       {/* Map */}
       <div style={{position:"relative",maxWidth:900,margin:"0 auto",aspectRatio:`${roomW}/${roomH}`}}>
@@ -494,7 +545,7 @@ export default function SeatingChart() {
                     fill={fl?c:"rgba(20,28,50,.7)"} fillOpacity={fl?.85:1}
                     stroke={c} strokeWidth={hov?".3":".18"} strokeOpacity={fl?.9:.35}
                     onMouseEnter={()=>setHovered(k)} onMouseLeave={()=>setHovered(null)}
-                    onClick={()=>startEdit(k,nm)} style={{transformOrigin:`${s.x}px ${s.y}px`}}/>
+                    onClick={()=>assignSeat(k,nm)} style={{transformOrigin:`${s.x}px ${s.y}px`}}/>
                   <text x={s.x} y={s.y+.4} textAnchor="middle" className="guest-label"
                     fill={fl?"#fff":"rgba(232,224,212,.22)"} fontSize={fl?".95":".85"} style={{pointerEvents:"none"}}>
                     {fl?(nm.length>8?nm.slice(0,7)+"…":nm):si+1}
@@ -526,6 +577,18 @@ export default function SeatingChart() {
           <div style={{display:"flex",gap:8}}>
             <button onClick={()=>{setTNames(p=>({...p,[editTbl]:tblInputVal.trim()||`Table ${editTbl+1}`}));setEditTbl(null);}} style={primaryBtn("#d4b483")}>Save</button>
             <button onClick={()=>setEditTbl(null)} style={cancelBtn}>Cancel</button>
+          </div>
+        </div>)}
+
+        {/* Import Guests */}
+        {modal==="importGuests"&&(<div style={{...modalBase,border:"1px solid rgba(106,126,184,.3)",minWidth:300}}>
+          <span style={{fontFamily:"'Playfair Display',Georgia,serif",fontSize:16,fontWeight:600,color:"#6A7EB8",textAlign:"center"}}>Import Guest List</span>
+          <p style={{fontFamily:"'Lato',sans-serif",fontSize:11,color:"rgba(232,224,212,.45)",margin:0,lineHeight:1.5}}>Paste one name per line. They'll show up below as an unassigned pool — click a name, then click an open seat to place them.</p>
+          <textarea value={importText} onChange={e=>setImportText(e.target.value)} rows={8} placeholder={"Jane Smith\nJohn Smith\n..."} autoFocus
+            style={{...numIn, resize:"vertical", fontFamily:"'Lato',sans-serif", lineHeight:1.6}}/>
+          <div style={{display:"flex",gap:8,marginTop:4}}>
+            <button onClick={importGuests} style={primaryBtn("#6A7EB8")}>Add to Pool</button>
+            <button onClick={()=>{setModal(null);setImportText("");}} style={cancelBtn}>Cancel</button>
           </div>
         </div>)}
 

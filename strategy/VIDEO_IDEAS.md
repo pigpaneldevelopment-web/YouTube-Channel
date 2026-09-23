@@ -5,7 +5,8 @@ Check off as published. Pull new ideas into `CONTENT_CALENDAR.md` in tier order.
 > **Off-limits:** the ski house cost-splitting app is a friend's project and must not be featured in any video — its original backlog entry has been removed.
 
 ## Tier 1 — search + broad appeal (post these first)
-- [ ] I Built a Full App With AI in One Day (No Coding Background)
+- [ ] I Built a Full App With AI in One Day (No Coding Background) — genuine live-build premise, needs a fresh app with no prior build history so real footage can be captured from the start; not the same video as Week 1
+- [x] I Let Claude Build a Feature for My Wedding App — Week 1, honest-recap format, see `strategy/scripts/week-01-full-app-day.md`
 - [ ] I Replaced 5 Paid Apps With Ones I Built Using AI
 - [ ] Build Your First App With AI: Complete Beginner Walkthrough
 - [ ] I Built My Friends a Fantasy Football Pick'em App
@@ -111,11 +112,18 @@ Check off as published. Pull new ideas into `CONTENT_CALENDAR.md` in tier order.
 - [ ] Year One: Everything I Built and Earned
 - [ ] What I'd Tell Myself on Video One
 
-## Tier 5 — AI workflow deep dives (series candidate)
-Not scheduled yet. Each "AI-workflow lesson" callout in a Full Build (see pillar 5 in `STRATEGY.md`) is a source for one of these — don't launch the series until there's a backlog of real lessons from actual builds to draw from, so nothing here gets padded with generic advice.
+## Tier 5 — AI workflow deep dives / tips & tricks (real pillar now, see `STRATEGY.md`)
+Every idea here has to trace back to a real lesson from an actual build — don't pad this with generic "AI tips" advice that isn't tied to something that actually happened.
 - [ ] Why I Start a New Chat for Every Feature (Context Management 101)
 - [ ] The One File I Give Claude Before Every Build
 - [ ] How Long Is Too Long? When to Reset Your AI Chat
 - [ ] Referencing Docs and Specs So AI Doesn't Guess
 - [ ] My Full Claude Workflow, Start to Finish
 - [ ] Every AI Coding Mistake I've Made, Ranked
+- [ ] How I Verify an AI Build Actually Works (Not Just Looks Done) — seeded from the RSVP-import verification lesson, `apps/wedding-seating-chart/BUILD_LOG.md`
+- [ ] Which AI Model Should You Actually Use (Speed vs. Quality vs. Cost)
+- [ ] How I Cut My AI Usage Without Losing Quality
+- [ ] The Prompt Habits That Actually Save You Time
+- [ ] Claude Code vs. a Chat Window: When to Use Which
+- [ ] Why Your AI Bill Adds Up (and What Actually Drives It)
+- [ ] I Let AI Build Something Autonomously — Here's What I Learned

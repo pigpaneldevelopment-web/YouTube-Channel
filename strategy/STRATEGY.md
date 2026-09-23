@@ -25,7 +25,7 @@
 2. **How-tos** — logins, databases, deploys, notifications. Search engine.
 3. **Tool tests** — AI tool comparisons, monthly cadence. Affiliate engine.
 4. **Side project economics** — costs, pricing, does it make money. Trust + lead gen.
-5. **AI workflow lessons** — not a standalone pillar yet, a recurring *element* inside Full Builds and How-tos: one callout per video naming a specific Claude/AI usage lesson (context management, when to start a fresh chat, referencing docs/specs instead of re-explaining, instruction-file setup). Builds credibility ("this guy's actually figured out how to use these tools") and gives the channel a natural on-ramp to a dedicated deep-dive series later once there's a backlog of real lessons to draw from — see the candidate list in `VIDEO_IDEAS.md`.
+5. **AI workflow lessons / tips & tricks** — real standalone pillar now, not just a callout. Two forms: (a) the ~20-30 sec lesson callout embedded inside Full Builds and How-tos (context management, instruction files, referencing docs), and (b) dedicated videos on model usage best practices — which model to use when, cutting token/usage waste, session/context hygiene, verifying an AI build actually works instead of trusting that it compiled. Every lesson used has to be one you actually ran into on a real build — see `VIDEO_IDEAS.md` Tier 5 for the backlog, seeded from real builds (e.g. the RSVP-import verification lesson in `apps/wedding-seating-chart/BUILD_LOG.md`). Builds credibility and differentiates from generic "AI tips" content that isn't tied to anything real.
 
 ## Monetization ladder
 - **Months 1–3:** affiliate links (hosting, database, AI tools actually used).
