@@ -42,4 +42,9 @@ To install it on a phone: open that URL in mobile Safari/Chrome, then "Add to Ho
 
 ## Video
 
-Week 1 (`strategy/scripts/week-01-full-app-day.md`) uses the honest-recap format: Claude built the RSVP-import feature autonomously, stated plainly on camera, narrated over real footage (`footage/rsvp-import-demo.webm`) and `BUILD_LOG.md` rather than presented as live capture. See `strategy/PRODUCTION_WORKFLOW.md` for what that format is and when to use it.
+Week 1 (`strategy/scripts/week-01-full-app-day.md`) uses the honest-recap format: Claude built the RSVP-import and CSV column-mapping features autonomously, stated plainly on camera, narrated over real footage and `BUILD_LOG.md` rather than presented as live capture. See `strategy/PRODUCTION_WORKFLOW.md` for what that format is and when to use it.
+
+`footage/` has:
+- `rsvp-import-demo.webm` — real capture of the simple-list import flow
+- `csv-import-demo.webm` — real capture of the CSV column-mapping flow
+- `week01-rough-cut.webm` (51s, silent) — both clips assembled with title/caption cards styled to match the app, timed to the script's beats. A real starting skeleton, not a finished video — narration and final editing polish are still needed.
