@@ -46,6 +46,62 @@ const ELEMENT_TYPES = {
   divider:   { label: "Room Divider",   icon: "—",  color: "#555"    },
 };
 
+const IMPORT_FIELDS = [
+  { key: "ignore",         label: "— Ignore —" },
+  { key: "firstName",      label: "First Name" },
+  { key: "lastName",       label: "Last Name" },
+  { key: "fullName",       label: "Full Name" },
+  { key: "table",          label: "Table #" },
+  { key: "mealPreference", label: "Meal Preference" },
+  { key: "dietary",        label: "Dietary Restrictions" },
+  { key: "rsvp",           label: "RSVP Status" },
+  { key: "plusOne",        label: "Plus One" },
+  { key: "party",          label: "Party / Group" },
+  { key: "notes",          label: "Notes" },
+];
+
+function guessField(header) {
+  const h = (header || "").toLowerCase().trim();
+  if (/first/.test(h)) return "firstName";
+  if (/last|surname/.test(h)) return "lastName";
+  if (/^name$|full ?name|guest ?name/.test(h)) return "fullName";
+  if (/table/.test(h)) return "table";
+  if (/meal|entree|food ?choice/.test(h)) return "mealPreference";
+  if (/diet|allerg/.test(h)) return "dietary";
+  if (/rsvp|status|attend/.test(h)) return "rsvp";
+  if (/plus ?one|\+1/.test(h)) return "plusOne";
+  if (/party|group|household/.test(h)) return "party";
+  if (/note/.test(h)) return "notes";
+  return "ignore";
+}
+
+// Minimal CSV/TSV parser: auto-detects comma vs tab, handles quoted fields.
+function parseDelimited(text) {
+  const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0);
+  if (lines.length === 0) return { headers: [], rows: [] };
+  const delim = lines[0].includes("\t") ? "\t" : ",";
+  const parseLine = (line) => {
+    const cells = [];
+    let cur = "", inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (inQuotes) {
+        if (c === '"') { if (line[i+1] === '"') { cur += '"'; i++; } else inQuotes = false; }
+        else cur += c;
+      } else {
+        if (c === '"') inQuotes = true;
+        else if (c === delim) { cells.push(cur); cur = ""; }
+        else cur += c;
+      }
+    }
+    cells.push(cur);
+    return cells.map(c => c.trim());
+  };
+  const headers = parseLine(lines[0]);
+  const rows = lines.slice(1).map(parseLine);
+  return { headers, rows };
+}
+
 const SEAT_OFF = -Math.PI / 2;
 function circleSeats(cx, cy, r, n) {
   return Array.from({ length: n }, (_, i) => {
@@ -206,6 +262,12 @@ export default function SeatingChart() {
   const [pool,       setPool]       = useState([]);
   const [poolSelected, setPoolSelected] = useState(null);
   const [importText, setImportText] = useState("");
+  const [guestMeta,  setGuestMeta]  = useState({}); // name -> { mealPreference, dietary, rsvp, plusOne, party, notes }
+  const [importMode, setImportMode] = useState("simple"); // "simple" | "csv"
+  const [csvText,    setCsvText]    = useState("");
+  const [csvHeaders, setCsvHeaders] = useState([]);
+  const [csvRows,    setCsvRows]    = useState([]);
+  const [columnMap,  setColumnMap]  = useState({}); // columnIndex -> field key
 
   // Add table form
   const [ntS, setNtS] = useState("circle");
@@ -253,6 +315,7 @@ export default function SeatingChart() {
         });
         setGuests(merged);
         if (Array.isArray(data.pool)) setPool(data.pool);
+        if (data.guestMeta) setGuestMeta(data.guestMeta);
       }
       setLoaded(true);
     });
@@ -260,7 +323,7 @@ export default function SeatingChart() {
 
   // ── Auto-save whenever state changes (debounced 800ms) ──
   const stateRef = useRef({});
-  stateRef.current = { tables, tPos, guests, tNames, elems, ePos, roomW, roomH, roomOX, roomOY, title, pool };
+  stateRef.current = { tables, tPos, guests, tNames, elems, ePos, roomW, roomH, roomOX, roomOY, title, pool, guestMeta };
 
   useEffect(() => {
     if (!loaded) return;
@@ -272,7 +335,7 @@ export default function SeatingChart() {
       setTimeout(() => setSaveStatus("idle"), 2000);
     }, 800);
     return () => clearTimeout(saveTimer.current);
-  }, [tables, tPos, guests, tNames, elems, ePos, roomW, roomH, roomOX, roomOY, title, pool, loaded]);
+  }, [tables, tPos, guests, tNames, elems, ePos, roomW, roomH, roomOX, roomOY, title, pool, guestMeta, loaded]);
 
   // ── SVG drag ──
   const svgPt = useCallback((e) => {
@@ -365,6 +428,80 @@ export default function SeatingChart() {
     }
     setImportText("");
     setModal(null);
+  };
+
+  const closeImportModal = () => {
+    setModal(null);
+    setImportText("");
+    setImportMode("simple");
+    setCsvText(""); setCsvHeaders([]); setCsvRows([]); setColumnMap({});
+  };
+
+  const parseCsvColumns = () => {
+    const { headers, rows } = parseDelimited(csvText);
+    if (headers.length === 0) return;
+    setCsvHeaders(headers);
+    setCsvRows(rows);
+    const guessed = {};
+    headers.forEach((h, i) => { guessed[i] = guessField(h); });
+    setColumnMap(guessed);
+  };
+
+  const findTableIndexByValue = (val) => {
+    if (!val) return -1;
+    const v = val.trim().toLowerCase();
+    let idx = tables.findIndex((_, i) => (tNames[i] || "").trim().toLowerCase() === v);
+    if (idx !== -1) return idx;
+    const num = v.replace(/^table\s*/i, "");
+    idx = tables.findIndex((_, i) => String(i + 1) === num);
+    return idx;
+  };
+
+  const finalizeCsvImport = () => {
+    const newGuests = { ...guests };
+    const newMeta = { ...guestMeta };
+    const newPool = [...pool];
+    const poolSeen = new Set(newPool);
+
+    const findOpenSeatKey = (ti) => {
+      const tbl = tables[ti];
+      for (let s = 0; s < tbl.seats; s++) {
+        const k = `${ti}-${s}`;
+        if (!newGuests[k]) return k;
+      }
+      return null;
+    };
+
+    csvRows.forEach(row => {
+      const rec = {};
+      Object.entries(columnMap).forEach(([colIdx, key]) => {
+        if (key === "ignore") return;
+        rec[key] = (row[Number(colIdx)] || "").trim();
+      });
+      const name = rec.fullName || [rec.firstName, rec.lastName].filter(Boolean).join(" ");
+      if (!name) return;
+
+      const meta = {};
+      ["mealPreference", "dietary", "rsvp", "plusOne", "party", "notes"].forEach(k => {
+        if (rec[k]) meta[k] = rec[k];
+      });
+      if (Object.keys(meta).length) newMeta[name] = { ...(newMeta[name] || {}), ...meta };
+
+      let placed = false;
+      if (rec.table) {
+        const ti = findTableIndexByValue(rec.table);
+        if (ti !== -1) {
+          const seatKey = findOpenSeatKey(ti);
+          if (seatKey) { newGuests[seatKey] = name; placed = true; }
+        }
+      }
+      if (!placed && !poolSeen.has(name)) { newPool.push(name); poolSeen.add(name); }
+    });
+
+    setGuests(newGuests);
+    setGuestMeta(newMeta);
+    setPool(newPool);
+    closeImportModal();
   };
 
   const total  = tables.reduce((s,t)=>s+t.seats,0);
@@ -581,15 +718,56 @@ export default function SeatingChart() {
         </div>)}
 
         {/* Import Guests */}
-        {modal==="importGuests"&&(<div style={{...modalBase,border:"1px solid rgba(106,126,184,.3)",minWidth:300}}>
+        {modal==="importGuests"&&(<div style={{...modalBase,border:"1px solid rgba(106,126,184,.3)",minWidth:320,maxWidth:560,maxHeight:"85vh",overflowY:"auto"}}>
           <span style={{fontFamily:"'Playfair Display',Georgia,serif",fontSize:16,fontWeight:600,color:"#6A7EB8",textAlign:"center"}}>Import Guest List</span>
-          <p style={{fontFamily:"'Lato',sans-serif",fontSize:11,color:"rgba(232,224,212,.45)",margin:0,lineHeight:1.5}}>Paste one name per line. They'll show up below as an unassigned pool — click a name, then click an open seat to place them.</p>
-          <textarea value={importText} onChange={e=>setImportText(e.target.value)} rows={8} placeholder={"Jane Smith\nJohn Smith\n..."} autoFocus
-            style={{...numIn, resize:"vertical", fontFamily:"'Lato',sans-serif", lineHeight:1.6}}/>
-          <div style={{display:"flex",gap:8,marginTop:4}}>
-            <button onClick={importGuests} style={primaryBtn("#6A7EB8")}>Add to Pool</button>
-            <button onClick={()=>{setModal(null);setImportText("");}} style={cancelBtn}>Cancel</button>
+
+          <div style={{display:"flex",gap:8}}>
+            <button onClick={()=>setImportMode("simple")} style={selBtn(importMode==="simple")}>Simple List</button>
+            <button onClick={()=>setImportMode("csv")} style={selBtn(importMode==="csv")}>CSV / Spreadsheet</button>
           </div>
+
+          {importMode==="simple" && (<>
+            <p style={{fontFamily:"'Lato',sans-serif",fontSize:11,color:"rgba(232,224,212,.45)",margin:0,lineHeight:1.5}}>Paste one name per line. They'll show up below the map as an unassigned pool — click a name, then click an open seat to place them.</p>
+            <textarea value={importText} onChange={e=>setImportText(e.target.value)} rows={8} placeholder={"Jane Smith\nJohn Smith\n..."} autoFocus
+              style={{...numIn, resize:"vertical", fontFamily:"'Lato',sans-serif", lineHeight:1.6}}/>
+            <div style={{display:"flex",gap:8,marginTop:4}}>
+              <button onClick={importGuests} style={primaryBtn("#6A7EB8")}>Add to Pool</button>
+              <button onClick={closeImportModal} style={cancelBtn}>Cancel</button>
+            </div>
+          </>)}
+
+          {importMode==="csv" && csvHeaders.length===0 && (<>
+            <p style={{fontFamily:"'Lato',sans-serif",fontSize:11,color:"rgba(232,224,212,.45)",margin:0,lineHeight:1.5}}>Paste a CSV (or a table copied from a spreadsheet) including its header row. Next step lets you map each column to a field — table #, name, meal preference, and so on.</p>
+            <textarea value={csvText} onChange={e=>setCsvText(e.target.value)} rows={8}
+              placeholder={"First Name,Last Name,Table,Meal,Dietary\nJane,Smith,3,Chicken,\nJohn,Smith,3,Beef,Nut allergy"}
+              autoFocus style={{...numIn, resize:"vertical", fontFamily:"'Lato',sans-serif", lineHeight:1.6}}/>
+            <div style={{display:"flex",gap:8,marginTop:4}}>
+              <button onClick={parseCsvColumns} style={primaryBtn("#6A7EB8")}>Map Columns →</button>
+              <button onClick={closeImportModal} style={cancelBtn}>Cancel</button>
+            </div>
+          </>)}
+
+          {importMode==="csv" && csvHeaders.length>0 && (<>
+            <p style={{fontFamily:"'Lato',sans-serif",fontSize:11,color:"rgba(232,224,212,.45)",margin:0,lineHeight:1.5}}>
+              {csvRows.length} row{csvRows.length===1?"":"s"} found. Map each column below — guessed automatically, adjust anything that's wrong. A matched Table # seats the guest directly; everything else lands in the unassigned pool.
+            </p>
+            <div style={{display:"flex",flexDirection:"column",gap:6,maxHeight:280,overflowY:"auto"}}>
+              {csvHeaders.map((h, i) => (
+                <div key={i} style={{display:"flex",alignItems:"center",gap:8}}>
+                  <span style={{flex:1,fontFamily:"'Lato',sans-serif",fontSize:12,color:"rgba(232,224,212,.7)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}} title={h}>{h || `Column ${i+1}`}</span>
+                  <select value={columnMap[i]||"ignore"} onChange={e=>setColumnMap(m=>({...m,[i]:e.target.value}))}
+                    style={{...numIn, width:170, padding:"5px 8px", fontSize:12}}>
+                    {IMPORT_FIELDS.map(f => <option key={f.key} value={f.key}>{f.label}</option>)}
+                  </select>
+                </div>
+              ))}
+            </div>
+            <div style={{display:"flex",gap:8,marginTop:4}}>
+              <button onClick={finalizeCsvImport} style={primaryBtn("#6A7EB8")}>Import {csvRows.length} Guest{csvRows.length===1?"":"s"}</button>
+              <button onClick={()=>{setCsvHeaders([]);setCsvRows([]);setColumnMap({});}} style={cancelBtn}>Back</button>
+              <button onClick={closeImportModal} style={cancelBtn}>Cancel</button>
+            </div>
+          </>)}
         </div>)}
 
         {/* Add Table */}
@@ -667,7 +845,18 @@ export default function SeatingChart() {
                 <span style={{fontFamily:"'Lato',sans-serif",fontWeight:300,fontSize:11,color:"rgba(232,224,212,.35)"}}>{tg.length}/{tbl.seats}</span>
               </div>
               {tg.length>0
-                ?<div style={{fontFamily:"'Lato',sans-serif",fontSize:11,color:"rgba(232,224,212,.55)",lineHeight:1.6}}>{tg.join(" · ")}</div>
+                ?<div style={{fontFamily:"'Lato',sans-serif",fontSize:11,color:"rgba(232,224,212,.55)",lineHeight:1.7}}>
+                  {tg.map((name,gi) => {
+                    const meta = guestMeta[name];
+                    const bits = meta ? [meta.mealPreference, meta.dietary, meta.rsvp].filter(Boolean) : [];
+                    return (
+                      <div key={gi}>
+                        {name}
+                        {bits.length>0 && <span style={{color:"rgba(212,180,131,.6)"}}> — {bits.join(", ")}</span>}
+                      </div>
+                    );
+                  })}
+                </div>
                 :<div style={{fontFamily:"'Lato',sans-serif",fontSize:11,color:"rgba(232,224,212,.2)",fontStyle:"italic"}}>No guests assigned</div>}
             </div>);
           })}
