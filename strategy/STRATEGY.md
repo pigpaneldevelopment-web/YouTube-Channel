@@ -5,7 +5,9 @@
 
 **Channel name: "Apps After Hours"** — handle `@appsafterhours`, confirmed available (verify final claim in YouTube Studio before publishing). The original directions (Weekend Build, Built After Hours, The Side Build) were all already taken by unrelated or adjacent-niche channels; `@appsafterhours` keeps the after-hours/day-job positioning with no collision.
 
-**Constraint:** keep Oracle products, customers, and hospitality work off the channel entirely. Check Oracle's outside-activities policy before publishing anything.
+**Constraints:**
+- Keep Oracle products, customers, and hospitality work off the channel entirely. Check Oracle's outside-activities policy before publishing anything.
+- The ski house cost-splitting app is a friend's project and is off-limits for the channel — don't feature it in any video, Short, or B-roll, even in passing.
 
 ## Target viewer
 28–45, professional, not a developer or only lightly technical. Runs the fantasy league, plans the group trip, owns a small business. Has an idea and a few free hours; wants something that works, not a CS lesson. This audience draws strong tech/business ad rates once ads are live.
@@ -13,7 +15,7 @@
 ## Why this niche over the alternatives
 | Niche | Verdict |
 |---|---|
-| AI app-building for non-developers | **Chosen.** High/growing demand, high competition but most competitors build demos — the edge here is real builds with real users (ski house, pick'em pool, grocery list, seating chart). Strong pre-YPP income (affiliates, templates, client work). Already doing the builds, so capture cost is low. |
+| AI app-building for non-developers | **Chosen.** High/growing demand, high competition but most competitors build demos — the edge here is real builds with real users (wedding seating chart, bachelor party app, pick'em pool, grocery list). Strong pre-YPP income (affiliates, templates, client work). Already doing the builds, so capture cost is low. |
 | Sports betting analytics | Good skill fit, weak economics (limited gambling ad rates, trust issues, saturated with touts). |
 | Fantasy baseball tools | Fun but too seasonal, crowded. |
 | Hospitality tech | Tiny audience, conflicts with day job. |

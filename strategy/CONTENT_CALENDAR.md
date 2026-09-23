@@ -4,8 +4,8 @@ One long video + 2–3 Shorts (cut from that week's long video) per week. Sequen
 
 | Week | Long video | Why this slot |
 |---|---|---|
-| 1 | I Built a Full App With AI in One Weekend (No Coding Background) | Strongest hook, sets channel premise |
-| 2 | I Built a Cost-Splitting App for a 16-Person Ski House | Proof of "real users," differentiates from demo channels |
+| 1 | I Built a Full App With AI in One Weekend (No Coding Background) | Strongest hook, sets channel premise — built around the wedding seating chart app |
+| 2 | I Built a Wedding Seating Chart App | Dedicated deep-dive on the Week 1 app, proof of "real users," differentiates from demo channels |
 | 3 | Build Your First App With AI: Complete Beginner Walkthrough | Evergreen search magnet, early |
 | 4 | Add Logins and a Database to Your AI-Built App for Free | Search engine pillar, high intent |
 | 5 | I Built My Friends a Fantasy Football Pick'em App | Relatable build #2 |
@@ -14,10 +14,12 @@ One long video + 2–3 Shorts (cut from that week's long video) per week. Sequen
 | 8 | I Built a Group Trip App That Ended Group Chat Chaos | Relatable build #3 |
 | 9 | 7 Mistakes Every Beginner Makes Building Apps With AI | Listicle format, shareable |
 | 10 | What It Actually Costs to Run an App You Built With AI | Side-project economics pillar, trust-builder |
-| 11 | I Built a Wedding Seating Chart App | Relatable build #4 |
+| 11 | I Built a Bachelor Party App, and One Feature Won | Unique/differentiated build, pulled up from Tier 3 — strong word-of-mouth potential per early informal feedback |
 | 12 | Can an AI-Built App Make Money? My Real Numbers | Economics pillar #2, natural "month 3" recap moment |
 
-**After week 12:** pull from Tier 1 remainder (8 videos left) + start rotating in Tier 2 how-tos. Re-run this calendar exercise in 12-week blocks rather than planning the full year up front — leave room to double down on whatever format/topic overperforms.
+**Note:** the ski house cost-splitting app is off-limits for the channel entirely — it's a friend's project not meant to be publicized. Don't feature it in any video, Short, or B-roll.
+
+**After week 12:** pull from Tier 1 remainder + start rotating in Tier 2 how-tos. Re-run this calendar exercise in 12-week blocks rather than planning the full year up front — leave room to double down on whatever format/topic overperforms.
 
 ## Before Week 1
 - [x] Confirm channel name/handle availability — chose **Apps After Hours** (`@appsafterhours`); claim it in YouTube Studio to finalize

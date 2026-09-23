@@ -1,6 +1,8 @@
-# Video Idea Backlog (100, ranked by growth potential)
+# Video Idea Backlog (ranked by growth potential)
 
 Check off as published. Pull new ideas into `CONTENT_CALENDAR.md` in tier order.
+
+> **Off-limits:** the ski house cost-splitting app is a friend's project and must not be featured in any video — its original backlog entry has been removed.
 
 ## Tier 1 — search + broad appeal (post these first)
 - [ ] I Built a Full App With AI in One Weekend (No Coding Background)
@@ -14,7 +16,6 @@ Check off as published. Pull new ideas into `CONTENT_CALENDAR.md` in tier order.
 - [ ] Add Logins and a Database to Your AI-Built App for Free
 - [ ] I Built a Net Worth Tracker That Connects to My Bank
 - [ ] Vibe Coding Explained for People With Real Jobs
-- [ ] I Built a Cost-Splitting App for a 16-Person Ski House
 - [ ] What It Actually Costs to Run an App You Built With AI
 - [ ] Can an AI-Built App Make Money? My Real Numbers
 - [ ] The Exact Prompt Setup I Use to Build Apps
