@@ -21,7 +21,7 @@ One long video + 2–3 Shorts (cut from that week's long video) per week. Sequen
 
 ## Before Week 1
 - [x] Confirm channel name/handle availability — chose **Apps After Hours** (`@appsafterhours`); claim it in YouTube Studio to finalize
-- [ ] Confirm current YouTube Partner Program thresholds directly on youtube.com/creators (see flag in `STRATEGY.md`)
+- [x] Confirm current YouTube Partner Program thresholds — verified (see `STRATEGY.md`): 1,000 subs + 4,000 watch hrs/365 days now, rising to 8,000 hrs for channels not yet admitted by Feb 1, 2027
 - [ ] Confirm Oracle outside-activities policy allows this channel
 - [ ] Set up affiliate accounts for hosting/DB/AI tools actually used in builds
 - [ ] Pick editing tool (Descript recommended) and cut one test video end-to-end to validate the 4.5 hr/week budget

@@ -27,11 +27,17 @@
 ## Monetization ladder
 - **Months 1–3:** affiliate links (hosting, database, AI tools actually used).
 - **Month 3+:** starter template pack (single-file PWA setup + prompt files), $19–$49.
-- **~500 subscribers:** fan funding unlocks; inbound small-business build requests start — highest-dollar leads.
-- **~1,000+ subscribers:** small sponsorships from AI/dev tool companies.
-- **Year 2:** ad revenue, once watch-hour threshold is met.
+- **500 subs + (3,000 watch hrs/365 days OR 3M Shorts views/90 days):** YPP Tier 1 unlocks — fan funding, Super Thanks/Chat. Inbound small-business build requests also tend to start around here — highest-dollar leads.
+- **~1,000+ subscribers:** small sponsorships from AI/dev tool companies (independent of YPP tiers).
+- **1,000 subs + (4,000 watch hrs/365 days OR 10M Shorts views/90 days):** YPP Tier 2 unlocks — full ad revenue. **This is the number that matters, and it has a deadline attached** (see below).
 
-> ⚠️ **Unverified — check before relying on this:** the specific YPP thresholds (1,000 subs + 8,000 watch hours/365 days, or 20M Shorts views/90 days, effective Feb 1 2027) came from an earlier chat and have not been confirmed against YouTube's current Partner Program page. Confirm the live numbers at youtube.com/creators before planning around them — ad revenue should be treated as a distant, third-priority income stream regardless of the exact figure.
+### YPP threshold — verified, with a real deadline risk
+Confirmed via YouTube's official Partner Program update post and cross-checked against current creator-economy sources (vidiq, StudioBinder, Nexlev) as of this writing:
+
+- **Current Tier 2 (full ads):** 1,000 subscribers + 4,000 valid watch hours in the trailing 365 days, OR 10M Shorts views in the trailing 90 days.
+- **Effective Feb 1, 2027, for any channel not yet admitted to Tier 2 by then:** the bar roughly doubles — 8,000 watch hours (trailing 365 days) or 20M Shorts views (trailing 90 days). The 1,000-subscriber requirement doesn't change.
+
+Practical read: starting now (Sept 2026), you have until ~Feb 2027 to hit 4,000 watch hours under the current bar — call it 5 months. At the weekly cadence in `PRODUCTION_WORKFLOW.md`, that's a stretch. Realistically, plan around needing 8,000 hours (~164 views/day at an 8-min average view, sustained for a year), and treat ad revenue as the third income stream behind affiliates/templates and client leads, not the first. Re-check this against youtube.com/creators periodically — YPP terms have moved before and can move again.
 
 ## Retention framework
 - Show the finished app in the first 10 seconds.
